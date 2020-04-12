@@ -16,6 +16,32 @@ function initMap() {
   infoWindow = new google.maps.InfoWindow()
 } 
 
+function searchCountry(countries){
+	console.log(countries)
+    var foundCountry = [];
+    var countryCode = document.getElementById('country-code-input').value;
+    if(countryCode){
+        for(var country of countries){
+            var name = country.name
+        	console.log(name)
+            if(name == countryCode){
+                foundCountry.push(country);
+            }
+        }
+    } 
+    else {
+        foundCountry = countries;
+    }
+}
+
+function clearLocations(){
+    infoWindow.close();
+    for (var i = 0; i < markers.length; i++) {
+      markers[i].setMap(null);
+    }
+    markers.length = 0;
+}
+
 var requestOptions = {
   method: 'GET',
   redirect: 'follow'
@@ -29,11 +55,22 @@ const getPosts = () => {
   })
 }
 
+function setOnClickListener(){
+	var countriesElements = document.querySelectorAll('.country-container')
+    countriesElements.forEach(function(elem, index){
+        elem.addEventListener('click', function(){
+            new google.maps.event.trigger(markers[index], 'click');
+        })
+    })
+}
+
 const buildData = (data) => {
 	var countriesHtml = ''
 	var countries = data.data
+	searchCountry(countries)
 	showContriesMarkers(countries)
-	for (country of countries){
+	for (var [index, country] of countries.entries()){
+	// for (country of countries){
 		var name = country.name
 		var confirmed = country.latest_data.confirmed
 		countriesHtml += `
@@ -49,11 +86,12 @@ const buildData = (data) => {
 		`
 		document.querySelector('.countries-list').innerHTML = countriesHtml;
 	}
+	setOnClickListener()
 }
 
 function showContriesMarkers(countries){
     var bounds = new google.maps.LatLngBounds();
-    for (country of countries){
+    for (var [index, country] of countries.entries()){
         var latlng = new google.maps.LatLng(
             country.coordinates.latitude,
             country.coordinates.longitude);
@@ -63,12 +101,12 @@ function showContriesMarkers(countries){
         var recovered = country.latest_data.recovered
         var critical = country.latest_data.critical
         bounds.extend(latlng);
-        createMarker(latlng, name, confirmed, deaths, recovered, critical);
+        createMarker(latlng, name, confirmed, deaths, recovered, critical, index+1);
     }
     map.fitBounds(bounds);
 }
 
-function createMarker(latlng, name, confirmed, deaths, recovered, critical) {
+function createMarker(latlng, name, confirmed, deaths, recovered, critical, index) {
   // var html = "<b>" + name + "</b> <br/>" + confirmed;
   var html = `
   	<div class="country-name-window">${name}</div>
@@ -95,7 +133,7 @@ function createMarker(latlng, name, confirmed, deaths, recovered, critical) {
   `
   var marker = new google.maps.Marker({
     map: map,
-    position: latlng
+    position: latlng,
   });
   google.maps.event.addListener(marker, 'click', function() {
     infoWindow.setContent(html);
