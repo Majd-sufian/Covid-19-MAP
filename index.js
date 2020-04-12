@@ -72,13 +72,15 @@ function showContriesMarkers(countries){
         var deaths = country.latest_data.deaths
         var recovered = country.latest_data.recovered
         var critical = country.latest_data.critical
+        var updatedAt = country.updated_at.substring(0, 10)
+        console.log(updatedAt.length)
         bounds.extend(latlng);
-        createMarker(latlng, name, confirmed, deaths, recovered, critical, index+1);
+        createMarker(latlng, name, confirmed, deaths, recovered, critical, index+1, updatedAt);
     }
     map.fitBounds(bounds);
 }
 
-function createMarker(latlng, name, confirmed, deaths, recovered, critical, index) {
+function createMarker(latlng, name, confirmed, deaths, recovered, critical, index, updated_at) {
   var html = `
   	<div class="country-name-window">${name}</div>
   		<hr>
@@ -99,6 +101,9 @@ function createMarker(latlng, name, confirmed, deaths, recovered, critical, inde
   			<i class="fas fa-surprise"></i>	
 	  		<span class="elemets-span">Critical: ${critical}</span>
 	  	</div>	
+  		<div class="elements">	
+	  		<span class="elemets-span">Last Update: ${updated_at}</span>
+	  	</div>
   	</div>	
 	
   `
