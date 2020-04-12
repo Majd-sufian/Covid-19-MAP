@@ -101,9 +101,10 @@ function createMarker(latlng, name, confirmed, deaths, recovered, critical, inde
   			<i class="fas fa-surprise"></i>	
 	  		<span class="elemets-span">Critical: ${critical}</span>
 	  	</div>	
+	  	<hr>
   		<div class="elements">	
-	  		<span class="elemets-span">Updated: ${updated_at}</span>
-	  	</div>
+	  		<span class="elemets-span" style="margin: 5px 0 5px 0">Updated: ${updated_at}</span>
+	  	</div> <br>
   	</div>	
 	
   `
