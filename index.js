@@ -16,32 +16,6 @@ function initMap() {
   infoWindow = new google.maps.InfoWindow()
 } 
 
-function searchCountry(countries){
-	console.log(countries)
-    var foundCountry = [];
-    var countryCode = document.getElementById('country-code-input').value;
-    if(countryCode){
-        for(var country of countries){
-            var name = country.name
-        	console.log(name)
-            if(name == countryCode){
-                foundCountry.push(country);
-            }
-        }
-    } 
-    else {
-        foundCountry = countries;
-    }
-}
-
-function clearLocations(){
-    infoWindow.close();
-    for (var i = 0; i < markers.length; i++) {
-      markers[i].setMap(null);
-    }
-    markers.length = 0;
-}
-
 var requestOptions = {
   method: 'GET',
   redirect: 'follow'
@@ -67,10 +41,8 @@ function setOnClickListener(){
 const buildData = (data) => {
 	var countriesHtml = ''
 	var countries = data.data
-	searchCountry(countries)
 	showContriesMarkers(countries)
 	for (var [index, country] of countries.entries()){
-	// for (country of countries){
 		var name = country.name
 		var confirmed = country.latest_data.confirmed
 		countriesHtml += `
@@ -107,7 +79,6 @@ function showContriesMarkers(countries){
 }
 
 function createMarker(latlng, name, confirmed, deaths, recovered, critical, index) {
-  // var html = "<b>" + name + "</b> <br/>" + confirmed;
   var html = `
   	<div class="country-name-window">${name}</div>
   		<hr>
