@@ -1,0 +1,135 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+    position: absolute;
+    z-index: 100;
+    font-size: 65px;
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+    top: 100px;
+    left: 100px;
+}
+
+.search-container {
+    border-radius: 30px;
+    position: absolute;
+    z-index: 100;
+    top: 190px;
+    left: 100px;
+    width: 400px;
+    height: 60px;
+    background-color: #454E53;
+    display: flex;
+}
+
+.search-container .search {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.search-container input {
+    width: 100%;
+    font-size: 25px;
+    background-color: transparent;
+    border: none;
+    color: white;
+}
+
+.search-container input:focus {
+    outline: none;
+}
+
+.search i {
+    font-size: 25px;
+    color: white;
+}
+
+.countries-list-container {
+    width: 400px;
+    position: absolute;
+    z-index: 100;
+    background: white;
+    left: 100px;
+    top: 275px;
+    border-radius: 30px;
+    bottom: 20px;
+    display: flex;
+    overflow-y: hidden;
+    padding-bottom: 30px;
+}
+
+.country-container {
+    border-bottom: 1px solid #979797;
+    display: flex;
+    cursor: pointer;
+}
+
+.country-info-container {
+    flex-grow: 1;
+}
+
+.country-name {
+    font-size: 21px;
+    color: #514C4C;
+    margin-top: 30px;
+}
+
+.country-name span {
+    display: block;
+}
+
+.country-cases-number {
+    color: #B5ADAD;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.countries-list {
+    flex-grow: 1;
+    overflow-y: scroll;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.country-name-window {
+    font-size: 25px;
+    color: #514C4C;
+    margin-top: 0px;
+    text-align: center;
+    font-weight: 900;
+}
+
+.gm-style .gm-style-iw-c {
+	width: 245px;
+}
+
+.gm-style .gm-style-iw {
+    font-size: large;
+    overflow: hidden;
+    font-weight: 300;
+}
+
+.elements {
+    position: relative;
+    left: 5px;
+}
+
+.elemets-span {
+	margin-left: 6px; 
+}
+
+.country-info {
+	font-size: larger;
+}
+
+.fas {
+    color: lightseagreen;
+}

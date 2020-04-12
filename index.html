@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Covid-19 MAP</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+</head>
+<body>
+
+
+    <div class="title">COVID-19 MAP</div>
+    <div class="search-container">
+    	<div class="search">
+            <input id="zip-code-input" type="text" placeholder="Enter Country"/>
+            <i class="fas fa-search" onclick="searchStores()"></i>
+    	</div>
+    </div>
+	
+    <div class="countries-list-container">
+        <div class="countries-list">
+            <div class="country-container">
+                <div class="country-info-container">
+                    <div class="country-name">
+                        <span>Palestine</span>
+                    </div>
+                    <div class="country-cases-number">10000 cases</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="map" style="width: 100%; height: 100%"></div>
+	<script src="index.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcwazb-T7zvceyA4VLWVB-eXvwj-XEUIA&callback=initMap">
+    </script>
+</body>
+</html>
