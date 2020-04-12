@@ -191,6 +191,9 @@ function createMarker(latlng, name, confirmed, deaths, recovered, critical, inde
   var marker = new google.maps.Marker({
     map: map,
     position: latlng,
+    icon: {
+      url: "https://img.icons8.com/nolan/32/coronavirus.png"
+    }
   });
   google.maps.event.addListener(marker, 'click', function() {
     infoWindow.setContent(html);
