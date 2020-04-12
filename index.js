@@ -72,7 +72,7 @@ function showContriesMarkers(countries){
         var deaths = country.latest_data.deaths
         var recovered = country.latest_data.recovered
         var critical = country.latest_data.critical
-        var updatedAt = country.updated_at.substring(0, 10)
+        var updatedAt = moment(country.updated_at.substring(0, 10)).fromNow()
         console.log(updatedAt.length)
         bounds.extend(latlng);
         createMarker(latlng, name, confirmed, deaths, recovered, critical, index+1, updatedAt);
@@ -102,7 +102,7 @@ function createMarker(latlng, name, confirmed, deaths, recovered, critical, inde
 	  		<span class="elemets-span">Critical: ${critical}</span>
 	  	</div>	
   		<div class="elements">	
-	  		<span class="elemets-span">Last Update: ${updated_at}</span>
+	  		<span class="elemets-span">Updated: ${updated_at}</span>
 	  	</div>
   	</div>	
 	
