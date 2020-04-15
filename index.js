@@ -1,11 +1,11 @@
 window.onload = () => {
-    getPosts();
+    getData();
 }
 
 var map;
-var markers = [];
+var markers = []; 
 var infoWindow;
-
+var allData2 = []
 function initMap() {
   var sydney = {lat: -33.863276, lng: 151.107977};
   map = new google.maps.Map(document.getElementById('map'), {
@@ -99,13 +99,13 @@ function initMap() {
 var requestOptions = {
   method: 'GET',
   redirect: 'follow'
-};
+}
 
-const getPosts = () => {
+const getData = () => {
   fetch("https://corona-api.com/countries", requestOptions) 
   .then((response) => response.json())
   .then((result) => {
-  	buildData(result)
+  	sortCountriesByCasesNumber(result.data)
   })
 }
 
@@ -118,14 +118,32 @@ function setOnClickListener(){
     })
 }
 
+function sortCountriesByCasesNumber(countries){
+  	for (let j = 0; j < countries.length - 1; j++) {
+	    let max_obj = countries[j];
+	    let max_location = j;
+	        for (let i = j; i < countries.length; i++) {
+	            // if you want to get elements form smaller to bigger just write (< instead >)
+	            if (countries[i].latest_data.confirmed > max_obj.latest_data.confirmed) {
+	                max_obj = countries[i]
+	                max_location = i
+	       	     }
+	        }
+	    countries[max_location] = countries[j]
+	    countries[j] = max_obj
+		}
+	buildData(countries)
+}
+
 const buildData = (data) => {
 	var countriesHtml = ''
-	var countries = data.data
+	var countries = data
+	allData2.push(countries)
 	showContriesMarkers(countries)
 	for (var [index, country] of countries.entries()){
 		var name = country.name
 		var confirmed = country.latest_data.confirmed
-		countriesHtml += `
+		countriesHtml += `	
             <div class="country-container">
                 <div class="country-info-container">
                     <div class="country-name">
@@ -141,6 +159,7 @@ const buildData = (data) => {
 	setOnClickListener()
 }
 
+
 function showContriesMarkers(countries){
     var bounds = new google.maps.LatLngBounds();
     for (var [index, country] of countries.entries()){
@@ -153,7 +172,6 @@ function showContriesMarkers(countries){
         var recovered = country.latest_data.recovered
         var critical = country.latest_data.critical
         var updatedAt = moment(country.updated_at.substring(0, 10)).fromNow()
-        console.log(updatedAt.length)
         bounds.extend(latlng);
         createMarker(latlng, name, confirmed, deaths, recovered, critical, index+1, updatedAt);
     }
