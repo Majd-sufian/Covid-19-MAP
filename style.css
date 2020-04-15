@@ -25,6 +25,7 @@ html, body {
     height: 60px;
     background-color: #454E53;
     display: flex;
+    visibility: hidden;
 }
 
 .search-container .search {
@@ -58,7 +59,7 @@ html, body {
     z-index: 100;
     background: white;
     left: 100px;
-    top: 275px;
+    top: 190px;
     border-radius: 30px;
     bottom: 20px;
     display: flex;
