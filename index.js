@@ -1,11 +1,12 @@
-window.onload = () => {
-    getData();
-}
-
 var map;
 var markers = []; 
 var infoWindow;
 var allData2 = []
+
+window.onload = () => {
+    getData();
+}
+
 function initMap() {
   var sydney = {lat: -33.863276, lng: 151.107977};
   map = new google.maps.Map(document.getElementById('map'), {
@@ -105,7 +106,8 @@ const getData = () => {
   fetch("https://corona-api.com/countries", requestOptions) 
   .then((response) => response.json())
   .then((result) => {
-  	sortCountriesByCasesNumber(result.data)
+  	allData2 = result.data;
+	sortCountriesByCasesNumber();
   })
 }
 
@@ -118,7 +120,8 @@ function setOnClickListener(){
     })
 }
 
-function sortCountriesByCasesNumber(countries){
+function sortCountriesByCasesNumber(){
+	var countries = allData2;
   	for (let j = 0; j < countries.length - 1; j++) {
 	    let max_obj = countries[j];
 	    let max_location = j;
@@ -138,7 +141,6 @@ function sortCountriesByCasesNumber(countries){
 const buildData = (data) => {
 	var countriesHtml = ''
 	var countries = data
-	allData2.push(countries)
 	showContriesMarkers(countries)
 	for (var [index, country] of countries.entries()){
 		var name = country.name
@@ -159,10 +161,10 @@ const buildData = (data) => {
 	setOnClickListener()
 }
 
-
 function showContriesMarkers(countries){
     var bounds = new google.maps.LatLngBounds();
     for (var [index, country] of countries.entries()){
+	console.log(country.coordinates.latitude)
         var latlng = new google.maps.LatLng(
             country.coordinates.latitude,
             country.coordinates.longitude);
