@@ -1,11 +1,11 @@
+window.onload = () => {
+    getData();
+}
+
 var map;
 var markers = []; 
 var infoWindow;
 var allData2 = []
-
-window.onload = () => {
-    getData();
-}
 
 function initMap() {
   var sydney = {lat: -33.863276, lng: 151.107977};
@@ -97,7 +97,7 @@ function initMap() {
   infoWindow = new google.maps.InfoWindow()
 } 
 
-var requestOptions = {
+const requestOptions = {
   method: 'GET',
   redirect: 'follow'
 }
@@ -111,17 +111,17 @@ const getData = () => {
   })
 }
 
-function setOnClickListener(){
-	var countriesElements = document.querySelectorAll('.country-container')
+const setOnClickListener = () => {
+	let countriesElements = document.querySelectorAll('.country-container')
     countriesElements.forEach(function(elem, index){
-        elem.addEventListener('click', function(){
+        elem.addEventListener('click', () => {
             new google.maps.event.trigger(markers[index], 'click');
         })
     })
 }
 
-function sortCountriesByCasesNumber(){
-	var countries = allData2;
+const sortCountriesByCasesNumber = () => {
+	let countries = allData2;
   	for (let j = 0; j < countries.length - 1; j++) {
 	    let max_obj = countries[j];
 	    let max_location = j;
@@ -139,12 +139,12 @@ function sortCountriesByCasesNumber(){
 }
 
 const buildData = (data) => {
-	var countriesHtml = ''
-	var countries = data
+	let countriesHtml = ''
+	let countries = data
 	showContriesMarkers(countries)
-	for (var [index, country] of countries.entries()){
-		var name = country.name
-		var confirmed = country.latest_data.confirmed
+	for (let [index, country] of countries.entries()){
+		let name = country.name
+		let confirmed = country.latest_data.confirmed
 		countriesHtml += `	
             <div class="country-container">
                 <div class="country-info-container">
@@ -161,27 +161,27 @@ const buildData = (data) => {
 	setOnClickListener()
 }
 
-function showContriesMarkers(countries){
-    var bounds = new google.maps.LatLngBounds();
-    for (var [index, country] of countries.entries()){
-	console.log(country.coordinates.latitude)
-        var latlng = new google.maps.LatLng(
+const showContriesMarkers = (countries) => {
+    let bounds = new google.maps.LatLngBounds();
+    for (let [index, country] of countries.entries()){
+        let latlng = new google.maps.LatLng(
             country.coordinates.latitude,
             country.coordinates.longitude);
-        var name = country.name
-        var confirmed = country.latest_data.confirmed
-        var deaths = country.latest_data.deaths
-        var recovered = country.latest_data.recovered
-        var critical = country.latest_data.critical
-        var updatedAt = moment(country.updated_at.substring(0, 10)).fromNow()
+        let name = country.name
+        let confirmed = country.latest_data.confirmed
+        let deaths = country.latest_data.deaths
+        let recovered = country.latest_data.recovered
+        let critical = country.latest_data.critical
+        let updatedAt = moment(country.updated_at).fromNow()
         bounds.extend(latlng);
         createMarker(latlng, name, confirmed, deaths, recovered, critical, index+1, updatedAt);
     }
     map.fitBounds(bounds);
 }
 
-function createMarker(latlng, name, confirmed, deaths, recovered, critical, index, updated_at) {
-  var html = `
+// function createMarker(latlng, name, confirmed, deaths, recovered, critical, index, updated_at) {
+const createMarker = (latlng, name, confirmed, deaths, recovered, critical, index, updated_at) =>{
+  let html = `
   	<div class="country-name-window">${name}</div>
   		<hr>
   	<div class="country-info">
@@ -208,7 +208,7 @@ function createMarker(latlng, name, confirmed, deaths, recovered, critical, inde
   	</div>	
 	
   `
-  var marker = new google.maps.Marker({
+  let marker = new google.maps.Marker({
     map: map,
     position: latlng,
     icon: {
